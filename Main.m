@@ -4,7 +4,7 @@
 
 clear 
 clf 
-IMG = imread("DB1/db1_16.jpg");
+IMG = imread("DB1/db1_01.jpg");
 
 %------------------------ Grey World Assumption  -----------------------------%
 
@@ -22,13 +22,16 @@ IMG_Skin_Color = ~IMG_Skin_Color;
 
 %------------------------------- Mouth Mask  ---------------------------------%
 
-
+IMG_Mouth_Map = MouthMap(IMG_Grey_World);
 
 %---------------------- Combine & Find the Eyes & Mouth  ---------------------%
 
 Eyes = IMG_Eye_Map - IMG_Skin_Color; 
+Mouth = IMG_Mouth_Map - IMG_Skin_Color; 
 
-[leftEye,rightEye] = EyeCoordinates(Eyes); 
+test = Eyes + Mouth; 
+
+[leftEye,rightEye] = EyeCoordinates(Eyes, Mouth); 
 
 
 %---------------------------- Plot The Images ----------------------------%
@@ -39,8 +42,8 @@ imshow(IMG);
 title('Original Image');
 
 hold on;
-scatter(leftEye(:, 1), leftEye(:, 2), 50, 'r', 'filled');  % 'r' for red color, adjust marker size (50 in this case)
-scatter(rightEye(:, 1), rightEye(:, 2), 50, 'magenta', 'filled');  % 'r' for red color, adjust marker size (50 in this case)
+scatter(leftEye(:, 1), leftEye(:, 2), 50, 'r', 'filled');  
+scatter(rightEye(:, 1), rightEye(:, 2), 50, 'magenta', 'filled'); 
 title('Eye Coordinates');
 xlabel('X-coordinate');
 ylabel('Y-coordinate');
@@ -62,7 +65,7 @@ subplot(2, 3, 4);
 imshow(IMG_Skin_Color);
 title('Skin Color Detection');
 
-% Eye final
+% Eye + Mouth final
 subplot(2, 3, 6);
-imshow(Eyes);
-title('Combined Eyes and Face Mask');
+imshow(test);
+title('Combined Eyes, Mouth and Face Mask');
