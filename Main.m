@@ -4,7 +4,7 @@
 
 clear 
 clf 
-IMG = imread("db1_16.jpg");
+IMG = imread("DB1/db1_16.jpg");
 
 %------------------------ Grey World Assumption  -----------------------------%
 
