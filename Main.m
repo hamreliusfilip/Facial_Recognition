@@ -28,6 +28,9 @@ IMG_Skin_Color = ~IMG_Skin_Color;
 
 Eyes = IMG_Eye_Map - IMG_Skin_Color; 
 
+[leftEye,rightEye] = EyeCoordinates(Eyes); 
+
+
 %---------------------------- Plot The Images ----------------------------%
 
 % Original Image
@@ -36,7 +39,8 @@ imshow(IMG);
 title('Original Image');
 
 hold on;
-scatter(position(:, 1), position(:, 2), 50, 'r', 'filled');  % 'r' for red color, adjust marker size (50 in this case)
+scatter(leftEye(:, 1), leftEye(:, 2), 50, 'r', 'filled');  % 'r' for red color, adjust marker size (50 in this case)
+scatter(rightEye(:, 1), rightEye(:, 2), 50, 'magenta', 'filled');  % 'r' for red color, adjust marker size (50 in this case)
 title('Eye Coordinates');
 xlabel('X-coordinate');
 ylabel('Y-coordinate');
