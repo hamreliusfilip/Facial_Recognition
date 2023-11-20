@@ -4,7 +4,7 @@
 
 clear 
 clf 
-IMG_Initial = imread("DB1/db1_.jpg");
+IMG_Initial = imread("DB1/db1_02.jpg");
 
 % Initial changes 
 
@@ -38,7 +38,7 @@ IMG_Skin_Color = ~IMG_Skin_Color;
 %------------------------------- Mouth Mask  ---------------------------------%
 
 IMG_Mouth_Map = MouthMap(IMG_Grey_World);
-se = strel('disk', 5); 
+se = strel('disk', 8); 
 IMG_Mouth_Map = imopen(IMG_Mouth_Map, se);
 IMG_Mouth_Map = imclose(IMG_Mouth_Map, se);
 
@@ -49,7 +49,7 @@ Mouth = IMG_Mouth_Map - IMG_Skin_Color;
 
 test = Eyes + Mouth; 
 
-[leftEye,rightEye] = EyeCoordinates(Eyes, Mouth); 
+[mouthx, mouthy] = EyeCoordinates(Eyes, Mouth); 
 
 
 se = strel('disk', 1); 
@@ -65,8 +65,7 @@ imshow(IMG);
 title('Original Image');
 
 hold on;
-scatter(leftEye(:, 1), leftEye(:, 2), 50, 'r', 'filled');  
-scatter(rightEye(:, 1), rightEye(:, 2), 50, 'magenta', 'filled'); 
+scatter(mouthx,mouthy, 90, 'blue', 'filled');  
 title('Eye Coordinates');
 xlabel('X-coordinate');
 ylabel('Y-coordinate');
@@ -80,7 +79,7 @@ title('Color correction');
 
 % Eye Map
 subplot(2, 3, 3);
-imshow(IMG_Eye_Map);
+imshow(Eyes);
 title('Eye Map');
 
 % Skin Color Detection
@@ -90,7 +89,7 @@ title('Skin Color Detection');
 
 % Mouth map 
 subplot(2,3,5) 
-imshow(IMG_Mouth_Map); 
+imshow(Mouth); 
 title('Mouth map'); 
 
 % Eye + Mouth final

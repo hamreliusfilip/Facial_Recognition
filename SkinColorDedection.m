@@ -20,7 +20,7 @@ function [grayImage]=SkinColorDedection(Im)
         binaryImg(r(i),c(i)) = 1;
     end
 
-    SE1 = strel('disk', 14, 4);
+    SE1 = strel('disk', 8, 4);
 
     openImg = imopen(binaryImg, SE1);
     mask = imclose(openImg, SE1);

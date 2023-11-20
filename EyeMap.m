@@ -11,7 +11,7 @@ Cr_neg = 255 - Cr;
 EyeMapC = (1/3).*(Cb.^2 + Cr_neg.^2 + (Cb./Cr));
 EyeMapC = im2double(EyeMapC);
 
-se = strel('disk', 4);
+se = strel('disk', 1);
 EyeMapL = imdilate(Y, se) ./ (imerode(Y, se) + 1);
 EyeMapL = im2double(histeq(EyeMapL));
 
