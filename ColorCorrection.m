@@ -19,8 +19,6 @@ averageColor = (mean(R(:)) + mean(G(:)) + mean(B(:))) / 3;
 % Calculate correction factor
 correctionFactor = averageColor ./ [mean(R(:)), mean(G(:)), mean(B(:))];
  
-[AR,AG,AB]
- 
  
 if (0.3 < Div) && (Div < 1.8) 
  

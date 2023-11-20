@@ -22,4 +22,7 @@ output_image = EyeMap > 0.85;
 
 output_image = im2double(output_image);
 
+output_image = imclearborder(output_image);
+
+
 return
