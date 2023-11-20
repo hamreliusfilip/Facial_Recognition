@@ -35,6 +35,14 @@ subplot(2, 3, 1);
 imshow(IMG);
 title('Original Image');
 
+hold on;
+scatter(position(:, 1), position(:, 2), 50, 'r', 'filled');  % 'r' for red color, adjust marker size (50 in this case)
+title('Eye Coordinates');
+xlabel('X-coordinate');
+ylabel('Y-coordinate');
+axis equal;
+hold off; 
+
 % Grey World Assumption
 subplot(2, 3, 2);
 imshow(IMG_Grey_World);
