@@ -12,7 +12,7 @@ Cr = im2double(imgYCrBr1(:,:,3));
 
     for i = 1:length(faceRows)
         for j = 1:length(faceCol)
-            if Cr(i,j) < 0.6 && Cr(i,j) > 0.51 && Cb(i,j) < 0.56 && Cb(i,j) > 0.4
+            if Cr(i,j) < 0.7 && Cr(i,j) > 0.6 && Cb(i,j) < 0.6 && Cb(i,j) > 0.5
                 faceMask(i,j) = 1;
             else
                 faceMask(i,j) = 0;
@@ -20,7 +20,7 @@ Cr = im2double(imgYCrBr1(:,:,3));
         end
     end
 
-    SE = strel('disk',8);
+    SE = strel('disk',5);
     
     faceMask = imdilate(faceMask, SE);
 

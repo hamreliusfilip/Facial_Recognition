@@ -4,22 +4,9 @@
 
 clear 
 clf 
-IMG_Initial = imread("DB1/db1_05.jpg");
+IMG = imread("DB1/db1_02.jpg");
 
-% Initial changes 
-
-
-[height, width, ~] = size(IMG_Initial);
-
-minDimension = min(height, width);
-sizeSquare = minDimension / 1.5; 
-
-% Calculate the region to crop [xmin, ymin, width, height]
-cropRegion = [(width - sizeSquare) / 2, (height - sizeSquare) / 2, sizeSquare, sizeSquare];
-
-% Crop the image
-IMG = imcrop(IMG_Initial, cropRegion);
-
+% In
 
 %------------------------ Grey World Assumption  -----------------------------%
 
