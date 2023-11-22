@@ -24,5 +24,6 @@ output_image = im2double(output_image);
 
 output_image = imclearborder(output_image);
 
+output_image = histeq(output_image);
 
 return

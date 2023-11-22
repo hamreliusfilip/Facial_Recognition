@@ -8,10 +8,6 @@ function [grayImage]=SkinColorDedection(Im)
     img_ycbcr = rgb2ycbcr(Im);
     Cb = img_ycbcr(:,:,2);
     Cr = img_ycbcr(:,:,3);
-
-    HSV = rgb2hsv(Im);
-    H = HSV(:,:,1);
-    S = HSV(:,:,2);
     
     [r,c] = find(Cb>=77 & Cb<=200 & Cr>=134 & Cr<=173);
     numind = size(r,1);
@@ -31,5 +27,5 @@ function [grayImage]=SkinColorDedection(Im)
     
     grayImage = rgb2gray(image);
     grayImage = imbinarize(grayImage);
-
+   
 return; 

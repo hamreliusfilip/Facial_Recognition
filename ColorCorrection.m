@@ -20,7 +20,7 @@ averageColor = (mean(R(:)) + mean(G(:)) + mean(B(:))) / 3;
 correctionFactor = averageColor ./ [mean(R(:)), mean(G(:)), mean(B(:))];
  
  
-if (0.3 < Div) && (Div < 1.8) 
+if (0.1 < Div) && (Div < 2.5) 
  
     correctedImg = Im;
     

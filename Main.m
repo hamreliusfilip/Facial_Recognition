@@ -4,11 +4,15 @@
 
 clear 
 clf 
-IMG_Initial = imread("DB1/db1_01.jpg");
+IMG_Initial = imread("DB1/db1_05.jpg");
+
+% Does not work on : 
+
+    % 05 -> Vänster/Höger öga hamnar för mycket till vänster, riktiga
+    % vänster ok
+    
 
 % Initial changes 
-
-
 [height, width, ~] = size(IMG_Initial);
 
 minDimension = min(height, width);
@@ -29,7 +33,6 @@ IMG_Grey_World = ColorCorrection(IMG);
 
 IMG_Eye_Map = EyeMap(IMG_Grey_World);
 
-
 %--------------------- Skin Color Dedection with HSV  ------------------------%
 
 IMG_Skin_Color = SkinColorDedection(IMG_Grey_World); 
@@ -38,22 +41,24 @@ IMG_Skin_Color = ~IMG_Skin_Color;
 %------------------------------- Mouth Mask  ---------------------------------%
 
 IMG_Mouth_Map = MouthMap(IMG_Grey_World);
+
 se = strel('disk',5); 
 IMG_Mouth_Map = imopen(IMG_Mouth_Map, se);
 IMG_Mouth_Map = imclose(IMG_Mouth_Map, se);
 
+
 %---------------------- Combine & Find the Eyes & Mouth  ---------------------%
 
 Eyes = IMG_Eye_Map - IMG_Skin_Color; 
-Mouth = IMG_Mouth_Map - IMG_Skin_Color; 
+Mouth = IMG_Mouth_Map; 
 
 test = Eyes + Mouth; 
 
 [mouthx, mouthy, leftEye, rightEye] = EyeCoordinates(Eyes, Mouth); 
 
-%se = strel('disk', 1); 
-%test = imopen(test, se);
-%test = imclose(test, se);
+se = strel('disk', 1); 
+test = imopen(test, se);
+test = imclose(test, se);
 
 
 %---------------------------- Plot The Images ----------------------------%
@@ -65,9 +70,9 @@ imshow(IMG);
 title('Original Image');
 
 hold on;
-scatter(mouthx,mouthy, 90, 'blue', 'filled');  
-scatter(leftEye(:,1),leftEye(:,2), 110, 'magenta', 'filled');  
-scatter(rightEye(:,1),rightEye(:,2), 70, 'blue', 'filled');  
+scatter(mouthx,mouthy, 150, 'blue', 'filled');  
+scatter(leftEye(:,1),leftEye(:,2), 140, 'magenta', 'filled');  
+scatter(rightEye(:,1),rightEye(:,2), 140, 'magenta', 'filled');  
 title('Eye Coordinates');
 xlabel('X-coordinate');
 ylabel('Y-coordinate');
