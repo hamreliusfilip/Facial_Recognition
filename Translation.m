@@ -45,11 +45,11 @@ angle_between_eyes = atan2(diff_y, diff_x) * 180 / pi;
 if (leftEye(1,2) > rightEye(1,2))
 
     % Rotate the image to align the eyes horizontally
-    rotatedImage = imrotate(translatedImage, angle_between_eyes, 'bicubic');
+    rotatedImage = imrotate(translatedImage, angle_between_eyes, 'bicubic', 'crop');
 
 else 
 
-    rotatedImage = imrotate(translatedImage, -angle_between_eyes, 'bicubic');
+    rotatedImage = imrotate(translatedImage, -angle_between_eyes, 'bicubic', 'crop');
 
 end
 
@@ -62,12 +62,10 @@ end
 
 
 % Anger önskat avstånd mellan ögonen för de skalade bilderna
-desired_eye_distance = 120; 
+desired_eye_distance = 150; 
 
 scale_factor = desired_eye_distance/diff_x;
 scaledImage  = imresize(rotatedImage, scale_factor);
-
-
 
 
 % Scale rotated image if dist is not equal 0

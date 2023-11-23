@@ -12,8 +12,6 @@ cropRegion = [(width - sizeSquare) / 2, (height - sizeSquare) / 2, sizeSquare, s
 
 IMG = imcrop(IMG_Initial, cropRegion);
 
-size(IMG)
-
 
 %------------------------ Grey World Assumption  -----------------------------%
 
@@ -67,73 +65,53 @@ scatter(mid_x,mid_y, 200, 'red', 'filled');
 hold off; 
 
 
-subplot(1, 2, 2);
-imshow(IMG);
+%subplot(1, 2, 2);
+%imshow(IMG);
 
 
-hold on;
-scatter(mouthx,mouthy, 150, 'blue', 'filled');  
-scatter(leftEye(:,1),leftEye(:,2), 140, 'magenta', 'filled');  
-scatter(rightEye(:,1),rightEye(:,2), 140, 'magenta', 'filled');  
-xlabel('X-coordinate');
-ylabel('Y-coordinate');
-axis equal;
-hold off
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+% hold on;
+% scatter(mouthx,mouthy, 150, 'blue', 'filled');  
+% scatter(leftEye(:,1),leftEye(:,2), 140, 'magenta', 'filled');  
+% scatter(rightEye(:,1),rightEye(:,2), 140, 'magenta', 'filled');  
+% xlabel('X-coordinate');
+% ylabel('Y-coordinate');
+% axis equal;
+% hold off
 
 
 
 %---------------------------- Uncomment to see all steps ----------------------------%
 
-%subplot(2, 3, 1);
-%imshow(IMG);
-%title('Original Image');
-
-%hold on;
-%scatter(mouthx,mouthy, 150, 'blue', 'filled');  
-%scatter(leftEye(:,1),leftEye(:,2), 140, 'magenta', 'filled');  
-%scatter(rightEye(:,1),rightEye(:,2), 140, 'magenta', 'filled');  
-%title('Eye Coordinates');
-%xlabel('X-coordinate');
-%ylabel('Y-coordinate');
-%axis equal;
-%hold off; 
-
-%subplot(2, 3, 2);
-%imshow(IMG_Grey_World);
-%title('Color correction');
-
-%subplot(2, 3, 3);
-%imshow(Eyes);
-%title('Eye Map');
-
-%subplot(2, 3, 4);
-%imshow(IMG_Skin_Color);
-%title('Skin Color Detection');
-
-%subplot(2,3,5) 
-%imshow(Mouth); 
-%title('Mouth map'); 
-
-%subplot(2, 3, 6);
-%imshow(test);
-%title('Combined Eyes, Mouth and Face Mask');
+% subplot(3, 3, 1);
+% imshow(IMG);
+% title('Original Image');
+% 
+% hold on;
+% scatter(mouthx,mouthy, 150, 'blue', 'filled');  
+% scatter(leftEye(:,1),leftEye(:,2), 140, 'magenta', 'filled');  
+% scatter(rightEye(:,1),rightEye(:,2), 140, 'magenta', 'filled');  
+% title('Eye Coordinates');
+% xlabel('X-coordinate');
+% ylabel('Y-coordinate');
+% axis equal;
+% hold off; 
+% 
+% subplot(3, 3, 2);
+% imshow(IMG_Grey_World);
+% title('Color correction');
+% 
+% subplot(3, 3, 3);
+% imshow(Eyes);
+% title('Eye Map');
+% 
+% subplot(3, 3, 4);
+% imshow(IMG_Skin_Color);
+% title('Skin Color Detection');
+% 
+% subplot(3,3,5) 
+% imshow(Mouth); 
+% title('Mouth map'); 
+% 
+% subplot(3, 3, 6);
+% imshow(test);
+% title('Combined Eyes, Mouth and Face Mask');

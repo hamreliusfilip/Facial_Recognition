@@ -11,7 +11,7 @@ function [mouthx, mouthy, leftEye, rightEye] = EyeCoordinates(Eyes, Mouth)
     Rmin = 5;
     Rmax = 50;
     
-    [centersDark, ~] = imfindcircles(Eyes,[Rmin Rmax],'ObjectPolarity','dark','Sensitivity', 0.90);
+    [centersDark] = imfindcircles(Eyes,[Rmin Rmax],'ObjectPolarity','dark','Sensitivity', 0.90);
       
     leftEye = centersDark(1,:);
     rightEye = centersDark(2,:);
