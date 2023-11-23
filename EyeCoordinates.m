@@ -13,8 +13,8 @@ function [mouthx, mouthy, leftEye, rightEye] = EyeCoordinates(Eyes, Mouth)
     
     [centersDark] = imfindcircles(Eyes,[Rmin Rmax],'ObjectPolarity','dark','Sensitivity', 0.90);
       
-    leftEye = centersDark(1,:);
-    rightEye = centersDark(2,:);
+    leftEye = centersDark(1,:)
+    rightEye = centersDark(2,:)
     
     if (centersDark(1,1) > centersDark(2,1)) %Om vänster ögat är det högra
         leftEye = centersDark(2,:);
@@ -22,8 +22,6 @@ function [mouthx, mouthy, leftEye, rightEye] = EyeCoordinates(Eyes, Mouth)
     end
     
     % Kontrollera med vinkeln om vi ens behver ändra något öga. 
-    leftEye = centersDark(1,:);
-    rightEye = centersDark(2,:);
     
     x1 = rightEye(1,1); 
     x2 = rightEye(1,2); 

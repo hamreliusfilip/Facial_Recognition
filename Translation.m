@@ -28,8 +28,8 @@ delta_y = round(abs(mid_y - leftEye(1,2)));
 % Pad the image
 padded_image = padarray(IMG, [200, 200], 0, 'both');
 
-translatedImage = imtranslate(padded_image, [delta_x, delta_y]);
 
+translatedImage = imtranslate(padded_image, [delta_x, delta_y]);
 
 %---------ROTATE---------%
 % Calculating the difference in x and y coordinates between the eyes
@@ -52,6 +52,7 @@ else
     rotatedImage = imrotate(translatedImage, -angle_between_eyes, 'bicubic', 'crop');
 
 end
+
 
 % Display the resulting image with the eyes centered and along the x-axis
 % imshow(rotatedImage);

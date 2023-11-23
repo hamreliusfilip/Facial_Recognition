@@ -2,7 +2,7 @@
 
 clear 
 clf 
-IMG_Initial = imread("DB1/db1_12.jpg");
+IMG_Initial = imread("DB1/db1_16.jpg");
 
 [height, width, ~] = size(IMG_Initial);
 
@@ -11,6 +11,7 @@ sizeSquare = minDimension / 1.3;
 cropRegion = [(width - sizeSquare) / 2, (height - sizeSquare) / 2, sizeSquare, sizeSquare];
 
 IMG = imcrop(IMG_Initial, cropRegion);
+
 
 
 %------------------------ Grey World Assumption  -----------------------------%
@@ -41,7 +42,9 @@ Mouth = IMG_Mouth_Map;
 
 test = Eyes + Mouth; 
 
-[mouthx, mouthy, leftEye, rightEye] = EyeCoordinates(test, Mouth); 
+[mouthx, mouthy, leftEye, rightEye] = EyeCoordinates(test, Mouth);
+
+
 
 fixedImage = Translation(IMG,leftEye,rightEye); 
 
@@ -59,24 +62,24 @@ subplot(1, 2, 1);
 imshow(fixedImage); 
 hold on; 
 
-scatter(mid_x,mid_y, 200, 'red', 'filled');  
+scatter(mid_x,mid_y, 200, 'yellow', 'filled');  
 
 
 hold off; 
 
 
-%subplot(1, 2, 2);
-%imshow(IMG);
+subplot(1, 2, 2);
+imshow(IMG);
 
 
-% hold on;
-% scatter(mouthx,mouthy, 150, 'blue', 'filled');  
-% scatter(leftEye(:,1),leftEye(:,2), 140, 'magenta', 'filled');  
-% scatter(rightEye(:,1),rightEye(:,2), 140, 'magenta', 'filled');  
-% xlabel('X-coordinate');
-% ylabel('Y-coordinate');
-% axis equal;
-% hold off
+hold on;
+scatter(mouthx,mouthy, 150, 'blue', 'filled');  
+scatter(leftEye(:,1),leftEye(:,2), 140, 'magenta', 'filled');  
+scatter(rightEye(:,1),rightEye(:,2), 140, 'magenta', 'filled');  
+xlabel('X-coordinate');
+ylabel('Y-coordinate');
+axis equal;
+hold off
 
 
 
