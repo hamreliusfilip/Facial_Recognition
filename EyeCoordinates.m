@@ -11,7 +11,7 @@ function [mouthx, mouthy, leftEye, rightEye] = EyeCoordinates(Eyes, Mouth)
     Rmin = 5;
     Rmax = 50;
     
-    [centersDark, ~] = imfindcircles(Eyes,[Rmin Rmax],'ObjectPolarity','dark','Sensitivity', 0.99);
+    [centersDark, ~] = imfindcircles(Eyes,[Rmin Rmax],'ObjectPolarity','dark','Sensitivity', 0.90);
       
     leftEye = centersDark(1,:);
     rightEye = centersDark(2,:);
@@ -19,12 +19,12 @@ function [mouthx, mouthy, leftEye, rightEye] = EyeCoordinates(Eyes, Mouth)
     if (centersDark(1,1) > centersDark(2,1)) %Om vänster ögat är det högra
         leftEye = centersDark(2,:);
         rightEye = centersDark(1,:);
-    else
-        leftEye = centersDark(1,:);
-        rightEye = centersDark(2,:);
     end
     
     % Kontrollera med vinkeln om vi ens behver ändra något öga. 
+    leftEye = centersDark(1,:);
+    rightEye = centersDark(2,:);
+    
     x1 = rightEye(1,1); 
     x2 = rightEye(1,2); 
     y1 = leftEye(1,1); 
@@ -37,9 +37,11 @@ function [mouthx, mouthy, leftEye, rightEye] = EyeCoordinates(Eyes, Mouth)
     theta = deg2rad(desired_angle);
     desired_slope = tan(theta);
 
-    is_level = abs(slope - desired_slope) < eps;
+    angle_tolerance = 3; % Set your desired angle tolerance
+
+    is_level = abs(slope - desired_slope) <= tand(angle_tolerance);
     
-    if ((is_level ~= 0) || (abs((centersDark(1,1) - leftEye(1,2))) < 150))
+    if ((~is_level) || (abs((rightEye(1,1) - leftEye(1,1))) < 100))
 
             for i = 2:length(centersDark) - 1
 
@@ -49,8 +51,22 @@ function [mouthx, mouthy, leftEye, rightEye] = EyeCoordinates(Eyes, Mouth)
 
                         rightEye = centersDark(i,:); 
 
+                        x1 = rightEye(1,1); 
+                        x2 = rightEye(1,2); 
+                        slope = (y2 - y1) / (x2 - x1);
+
+                        is_level = abs(slope - desired_slope) < eps;
+                        
+                        if ((~is_level) || (abs((rightEye(1,1) - leftEye(1,1))) < 100))
+                            
+                            break;
+                            
+                        end
+                        
+
                  end
             end
-        abs((rightEye(1,1) - leftEye(1,1)))
     end 
+    
+   
 end
