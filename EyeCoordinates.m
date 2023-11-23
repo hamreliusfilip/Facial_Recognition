@@ -11,7 +11,7 @@ function [mouthx, mouthy, leftEye, rightEye] = EyeCoordinates(Eyes, Mouth)
     Rmin = 5;
     Rmax = 50;
     
-    [centersDark, ~] = imfindcircles(Eyes,[Rmin Rmax],'ObjectPolarity','dark','Sensitivity', 0.95);
+    [centersDark, ~] = imfindcircles(Eyes,[Rmin Rmax],'ObjectPolarity','dark','Sensitivity', 0.99);
       
     leftEye = centersDark(1,:);
     rightEye = centersDark(2,:);
@@ -25,17 +25,32 @@ function [mouthx, mouthy, leftEye, rightEye] = EyeCoordinates(Eyes, Mouth)
     end
     
     % Kontrollera med vinkeln om vi ens behver ändra något öga. 
-    
-    
-    for i = 2:length(centersDark) - 1
-        
-         if((abs((centersDark(i,1) - leftEye(1,1))) < 150) && ... 
-             (abs((centersDark(i,1) - leftEye(1,1))) > 120)  && ...
-             (i ~= length(centersDark))) 
+    x1 = rightEye(1,1); 
+    x2 = rightEye(1,2); 
+    y1 = leftEye(1,1); 
+    y2 = leftEye(1,2); 
+  
+    slope = (y2 - y1) / (x2 - x1);
 
-                rightEye = centersDark(i,:); 
-                
-         end
-    end
-    abs((rightEye(1,1) - leftEye(1,1)))
+    desired_angle = 3;
+
+    theta = deg2rad(desired_angle);
+    desired_slope = tan(theta);
+
+    is_level = abs(slope - desired_slope) < eps;
+    
+    if ((is_level ~= 0) || (abs((centersDark(1,1) - leftEye(1,2))) < 150))
+
+            for i = 2:length(centersDark) - 1
+
+                 if((abs((centersDark(i,1) - leftEye(1,1))) < 150) && ... 
+                     (abs((centersDark(i,1) - leftEye(1,1))) > 120)  && ...
+                     (i ~= length(centersDark))) 
+
+                        rightEye = centersDark(i,:); 
+
+                 end
+            end
+        abs((rightEye(1,1) - leftEye(1,1)))
+    end 
 end
