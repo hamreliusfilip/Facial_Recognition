@@ -1,3 +1,5 @@
+
+
 %----------------------- Clear, Import & Crop --------------------------------%
 
 clear 
@@ -52,10 +54,11 @@ hold on;
 scatter(mouthx,mouthy, 150, 'blue', 'filled');  
 scatter(leftEye(:,1),leftEye(:,2), 140, 'magenta', 'filled');  
 scatter(rightEye(:,1),rightEye(:,2), 140, 'magenta', 'filled');  
-xlabel('X-coordinate');
-ylabel('Y-coordinate');
-axis equal;
-hold off; 
+%title('Eye Coordinates');
+%xlabel('X-coordinate');
+%ylabel('Y-coordinate');
+%axis equal;
+%hold off; 
 
 
 
