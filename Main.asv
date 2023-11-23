@@ -1,10 +1,8 @@
-
-
 %----------------------- Clear, Import & Crop --------------------------------%
 
 clear 
 clf 
-IMG_Initial = imread("DB1/db1_01.jpg");
+IMG_Initial = imread("DB1/db1_11.jpg");
 
 [height, width, ~] = size(IMG_Initial);
 
@@ -17,7 +15,7 @@ IMG = imcrop(IMG_Initial, cropRegion);
 
 %------------------------ Grey World Assumption  -----------------------------%
 
-IMG_Grey_World = ColorCorrection(IMG);
+IMG_Grey_World = ColorCorrection(IMG); % Används ej
 
 %------------------------------- Eye Map  ------------------------------------%
 
@@ -46,26 +44,40 @@ test = Eyes + Mouth;
 
 [mouthx, mouthy, leftEye, rightEye] = EyeCoordinates(test, Mouth); 
 
+fixedImage = Translation(IMG,leftEye,rightEye); 
+
 %---------------------- Combine & Find the Eyes & Mouth  ---------------------%
 
+[height, width, ~] = size(fixedImage);
+
+% Center of the image
+mid_x = round(width / 2);
+mid_y = round(height / 2);
+
+
+figure
+subplot(1, 2, 1);
+imshow(fixedImage); 
+hold on; 
+
+scatter(mid_x,mid_y, 200, 'red', 'filled');  
+
+
+hold off; 
+
+
+subplot(1, 2, 2);
 imshow(IMG);
+
 
 hold on;
 scatter(mouthx,mouthy, 150, 'blue', 'filled');  
 scatter(leftEye(:,1),leftEye(:,2), 140, 'magenta', 'filled');  
 scatter(rightEye(:,1),rightEye(:,2), 140, 'magenta', 'filled');  
-%title('Eye Coordinates');
-%xlabel('X-coordinate');
-%ylabel('Y-coordinate');
-%axis equal;
-%hold off; 
-
-
-
-
-
-
-
+xlabel('X-coordinate');
+ylabel('Y-coordinate');
+axis equal;
+hold off
 
 
 

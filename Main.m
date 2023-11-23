@@ -2,7 +2,7 @@
 
 clear 
 clf 
-IMG_Initial = imread("DB1/db1_01.jpg");
+IMG_Initial = imread("DB1/db1_12.jpg");
 
 [height, width, ~] = size(IMG_Initial);
 
@@ -12,10 +12,12 @@ cropRegion = [(width - sizeSquare) / 2, (height - sizeSquare) / 2, sizeSquare, s
 
 IMG = imcrop(IMG_Initial, cropRegion);
 
+size(IMG)
+
 
 %------------------------ Grey World Assumption  -----------------------------%
 
-IMG_Grey_World = ColorCorrection(IMG);
+IMG_Grey_World = ColorCorrection(IMG); % Används ej
 
 %------------------------------- Eye Map  ------------------------------------%
 
@@ -34,7 +36,6 @@ se = strel('disk',5);
 IMG_Mouth_Map = imopen(IMG_Mouth_Map, se);
 IMG_Mouth_Map = imclose(IMG_Mouth_Map, se);
 
-
 %---------------------- Combine & Find the Eyes & Mouth  ---------------------%
 
 Eyes = IMG_Eye_Map - IMG_Skin_Color; 
@@ -44,9 +45,31 @@ test = Eyes + Mouth;
 
 [mouthx, mouthy, leftEye, rightEye] = EyeCoordinates(test, Mouth); 
 
+fixedImage = Translation(IMG,leftEye,rightEye); 
+
 %---------------------- Combine & Find the Eyes & Mouth  ---------------------%
 
+[height, width, ~] = size(fixedImage);
+
+% Center of the image
+mid_x = round(width / 2);
+mid_y = round(height / 2);
+
+
+figure
+subplot(1, 2, 1);
+imshow(fixedImage); 
+hold on; 
+
+scatter(mid_x,mid_y, 200, 'red', 'filled');  
+
+
+hold off; 
+
+
+subplot(1, 2, 2);
 imshow(IMG);
+
 
 hold on;
 scatter(mouthx,mouthy, 150, 'blue', 'filled');  
@@ -55,14 +78,7 @@ scatter(rightEye(:,1),rightEye(:,2), 140, 'magenta', 'filled');
 xlabel('X-coordinate');
 ylabel('Y-coordinate');
 axis equal;
-hold off; 
-
-
-
-
-
-
-
+hold off
 
 
 

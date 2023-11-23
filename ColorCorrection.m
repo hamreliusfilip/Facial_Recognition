@@ -20,15 +20,11 @@ averageColor = (mean(R(:)) + mean(G(:)) + mean(B(:))) / 3;
 correctionFactor = averageColor ./ [mean(R(:)), mean(G(:)), mean(B(:))];
  
  
-if (0.1 < Div) && (Div < 2.5) 
+if (0.2 < Div) && (Div < 1.8) 
  
     correctedImg = Im;
     
-%elseif (AR > 180)
-    
-  %  test = 5
-   % correctedImg = cat(3, R .* correctionFactor(1), G, B);
-    
+
 elseif ((abs(correctionFactor(1)) == abs(correctionFactor(2))) && (abs(correctionFactor(2)) == abs(correctionFactor(3))))
     
     correctedImg = Im;
