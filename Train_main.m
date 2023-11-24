@@ -32,6 +32,6 @@ save(matFileName, 'allImages');
     %img = allImages{i}; 
     %imshow(img);
 
-end
+%end
 
 
