@@ -1,0 +1,25 @@
+
+allImages = cell(16, 1);
+
+for i = 1:16 
+    
+    if(i < 10)
+        i = "0" + i; %#ok
+    end
+    
+    IMG_Initial = imread("DB1/db1_"+ i +".jpg");
+
+    [IMG,leftEye,rightEye] = Face_Detection(IMG_Initial);
+    
+    img = Translation(IMG,leftEye,rightEye);
+
+    % Hämta features från PCA & Eigenfaces 
+    allImages{i} = img;
+
+end 
+
+matFileName = 'DataSet.mat';
+
+save(matFileName, 'allImages');
+
+

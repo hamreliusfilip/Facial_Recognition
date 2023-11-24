@@ -1,4 +1,4 @@
-function [mouthx, mouthy, leftEye, rightEye] = EyeCoordinates(Eyes, Mouth)
+function [leftEye, rightEye] = EyeCoordinates(Eyes, Mouth)
    
     stats_Mouth = regionprops("table", Mouth, "Centroid", "MajorAxisLength", "MinorAxisLength");
 
@@ -13,8 +13,8 @@ function [mouthx, mouthy, leftEye, rightEye] = EyeCoordinates(Eyes, Mouth)
     
     [centersDark] = imfindcircles(Eyes,[Rmin Rmax],'ObjectPolarity','dark','Sensitivity', 0.90);
       
-    leftEye = centersDark(1,:)
-    rightEye = centersDark(2,:)
+    leftEye = centersDark(1,:);
+    rightEye = centersDark(2,:);
     
     if (centersDark(1,1) > centersDark(2,1)) %Om vänster ögat är det högra
         leftEye = centersDark(2,:);
