@@ -13,39 +13,44 @@ function correctedImg = GrayWorld(Im)
     G = Im(:,:,2);
     B = Im(:,:,3);
 
-    % Calculate brightness (arithmetic mean)
-    brightness = (R + G + B) / 3;
 
-    % Find number of pixels in top 5%
-    totalPixels = numel(brightness);
-    numTopPixels = round(0.05 * totalPixels);
+    % VET INTE OM VI BEHÖVER DETTA? STÅR I RAPPORTEN ATT VI SKA BERÄKNA TOP 5%
+    % MEN DEN GÖR JU LIKSOM INGENTING EGENTLIGEN?
 
-    % Identify top 5% brightest pixels based on brightness
-    [~, indices] = sort(brightness(:), 'descend');
-    topPixelIndices = indices(1:numTopPixels);
+    % % Calculate brightness (arithmetic mean)
+    % brightness = (R + G + B) / 3;
+    % 
+    % % Find number of pixels in top 5%
+    % totalPixels = numel(brightness);
+    % numTopPixels = round(0.05 * totalPixels);
+    % 
+    % % Identify top 5% brightest pixels based on brightness
+    % [~, indices] = sort(brightness(:), 'descend');
+    % topPixelIndices = indices(1:numTopPixels);
 
     % Calculate the average of the top pixels for each channel
-    AR = mean(R(topPixelIndices));
-    AG = mean(G(topPixelIndices));
-    AB = mean(B(topPixelIndices));
+    % AR = mean(R(topPixelIndices));
+    % AG = mean(G(topPixelIndices));
+    % AB = mean(B(topPixelIndices));
 
 
-    %--------------- STEP 2 ---------------%  Behövs ej eller??????
+    %--------------- STEP 2 ---------------%  
     % Calculate the value of max(AR, AG, and AB)/ min(AR, AG, and AB). 
     % If the value greatly deviates from 1, then determine the image has light interference.
-    Max = max([AR, AG, AB]);
-    Min = min([AR, AG, AB]);
- 
-    Div = Max ./ Min; 
+    % Max = max([AR, AG, AB]);
+    % Min = min([AR, AG, AB]);
+    % 
+    % Div = Max ./ Min; 
+    % 
+    % % Determine if there is light interference
+    % if Div > 1.2 % Adjust this threshold as needed
+    %     disp('The image has light interference.');
+    % else
+    %     disp('The image does not have significant light interference.');
+    % end
 
-    % Determine if there is light interference
-    if Div > 1.2 % Adjust this threshold as needed
-        disp('The image has light interference.');
-    else
-        disp('The image does not have significant light interference.');
-    end
 
-
+    
 
     %--------------- STEP 1 ---------------%
     % Calculate the respective averages
@@ -75,13 +80,8 @@ function correctedImg = GrayWorld(Im)
 
     %--------------- STEP 4 ---------------%
     % Combine the adjusted channels to get the final adjusted image
-    correctedImg = cat(3, adjustedR, adjustedG, adjustedB);
-
-    % correctedImg(:,:,1) = adjustedR;
-    % correctedImg(:,:,2) = adjustedG;
-    % correctedImg(:,:,3) = adjustedB;
-
-
+    correctedImg = uint8(cat(3, adjustedR, adjustedG, adjustedB));
+   
 end
 
 
