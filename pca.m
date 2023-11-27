@@ -1,77 +1,55 @@
-function [importantFeatures] = pca(IMG)
-
-% Define the path to your image folder
+% Parameters
+commonSize = [400, 400];
 imageFolderPath = 'DB1';
 
-% Get a list of image files in the folder
-imageFiles = dir(fullfile(imageFolderPath, '*.jpg')); 
+% Load images and compute mean face
+imageFiles = dir(fullfile(imageFolderPath, '*.jpg'));
 
-% Get the number of images
+% Get number of images
 numImages = numel(imageFiles);
 
-targetsize = [650, 900]; % Uppdatera targetsize till den önskade storleken
+% Initialize the matrix to store the centered image vectors
+imageData = zeros(numImages, prod(commonSize));
 
-% Initialize matrix to store image data without reshaping
-imageData = zeros(numImages, prod(targetsize)); 
-
-% Process each image in the folder
 for i = 1:numImages
-    % Read the image
     img = imread(fullfile(imageFolderPath, imageFiles(i).name));
     
-    % Convert image to column vector and store
-    imgVector = double(img(:)); 
-    
-    meanFace = mean(imgVector);
+    % Convert the resized image to grayscale
+    grayScale = im2gray(img);
 
-    % Subtract mean face from each image vector
-    normalizedData = imgVector - meanFace; 
-     
-    % Store normalized vector in the matrix
-    imageData(i, 1:numel(normalizedData)) = normalizedData';
+    % Resize the image to the common size
+    resizedImg = imresize(grayScale, commonSize);
+   
+    % Vectorize the grayscale image and store in the matrix
+    %imgVector = double(grayScale(:));
+    %imageData(:, i) = imgVector;
+
+    imageData(i, :) = reshape(resizedImg, 1, []);
 end
 
-% Transponera data för PCA-funktionen
-dataTranspose = normalizedData';
 
-% Beräkna kovariansmatrisen
-covarianceMatrix = cov(dataTranspose);
+% Compute the mean face vector
+meanFaceVector = mean(imageData);
 
-% Utför egenvärdesanalys på kovariansmatrisen
-[eigenVectors, eigenValues] = eig(covarianceMatrix);
+% Subtract the mean face vector from each vector
+centeredImageData = imageData - meanFaceVector;
 
-% Sortera egenvärdena i fallande ordning
-[eigenValuesSorted, sortIdx] = sort(diag(eigenValues), 'descend');
-eigenVectorsSorted = eigenVectors(:, sortIdx);
+% Built-in pca function
+[eigenVectors, score, eigenValues] = pca(centeredImageData)
 
-% Kontrollera storleken på eigenVectorsSorted
-sizeEigenVectorsSorted = size(eigenVectorsSorted);
+top_eigVec = eigenVectors(:, 1:10)
 
-% Välj antalet tillgängliga egenvärden
-numAvailableEigenValues = sizeEigenVectorsSorted(2); % Antalet kolumner i eigenVectorsSorted
+% eigenFaces = reshape(top_eigVec, 1, [])
 
-% Välj antalet främsta egenvärden baserat på tillgängliga egenvärden
-numEigenFaces = min(10, numAvailableEigenValues); % Välj det minsta mellan 10 och antalet tillgängliga egenvärden
+% Assuming commonSize = [400, 400]
+eigenfaceSize = [400, 400];
 
-% Skapa principalComponents med rätt antal egenvärden
-principalComponents = eigenVectorsSorted(:, 1:numEigenFaces);
+% Reshape and display the first 10 eigenfaces
+for i = 1:10
+    eigenface = reshape(top_eigVec(:, i), eigenfaceSize);
+    subplot(2, 5, i);
+    imshow(eigenface, []);
+    title(['Eigenface ', num2str(i)]);
+end
 
-% Beräkna Eigenfaces genom att multiplicera principalComponents med normaliserad data
-eigenFaces = principalComponents' * normalizedData';
-
-% Beräkna den totala summan av egenvärden
-totalEigenValuesSum = sum(eigenValuesSorted);
-
-% Beräkna förklarad varians för varje egenvärde
-explainedVariance = cumsum(eigenValuesSorted) / totalEigenValuesSum;
-
-% Hitta det minsta antalet egenvärden som förklarar en viss procent av variansen
-desiredVarianceExplained = 0.95; % till exempel, 95% av variansen
-numImportantEigenValues = find(explainedVariance >= desiredVarianceExplained, 1);
-
-% Välj de viktigaste egenvärdena och deras motsvarande egenvärdesvektorer
-importantEigenVectors = eigenVectorsSorted(:, 1:numImportantEigenValues);
-
-% Använd de viktigaste egenvärdena för att transformera dina data
-importantFeatures = importantEigenVectors' * normalizedData';
 
