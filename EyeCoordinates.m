@@ -1,4 +1,8 @@
+
+
 function [leftEye, rightEye] = EyeCoordinates(Eyes, Mouth)
+
+warning('off', 'all');
    
     stats_Mouth = regionprops("table", Mouth, "Centroid", "MajorAxisLength", "MinorAxisLength");
 
@@ -66,5 +70,5 @@ function [leftEye, rightEye] = EyeCoordinates(Eyes, Mouth)
             end
     end 
     
-   
+   warning('on', 'all');
 end

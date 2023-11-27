@@ -4,22 +4,18 @@ function [int] = tnm034(IMG)
 
 img = Translation(IMG,leftEye,rightEye);
 
-% Hämta features från PCA & Eigenfaces 
+[eigenface, featureVector] = GetEigenFace(img);
 
 
-
-
-load('DataSet.mat', 'allImages')
+load('DataSet2.mat', 'eigenfaces')
+load('DataSet3.mat', 'featureVectors')
 
 for i = 1:16 
 
-    % Jämför features med alla feutures i datasetet och Bestäm vilken som liknar mest 
+    dis = abs(featureVector - featureVectors{i}; 
     
-    % Treshold for acceptable face 
-
-end
-
-
-% Retunera bildens index
+    if dis < 0.3
+        int = i; 
+    end 
 
 end 
