@@ -84,5 +84,4 @@ scaledImage  = imresize(rotatedImage, scale_factor);
 %margin_x = 40;
 %croppedImage = imcrop(scaledImage, [(center_x-margin_x) (center_y-60) desired_eye_distance+2*margin_x 230]);
 
-
 end

@@ -1,25 +1,38 @@
 
 allImages = cell(16, 1);
+eigenfaces = cell(16,1);
+featureVector = cell(16,1);
 
 for i = 1:16 
     
     if(i < 10)
-        i = "0" + i; %#ok
+        nr = "0" + i; 
+    else
+        nr = i;
     end
     
-    IMG_Initial = imread("DB1/db1_"+ i +".jpg");
+    IMG_Initial = imread("DB1/db1_"+ nr +".jpg");
 
     [IMG,leftEye,rightEye] = Face_Detection(IMG_Initial);
     
-    img = Translation(IMG,leftEye,rightEye);
+    img = Face_Alignment_Normalization(IMG,leftEye,rightEye);
 
     % Hämta features från PCA & Eigenfaces 
-    allImages{i} = img;
+    [eigenfaces{i}, featureVector{i}] = pca(img);
 
 end 
 
 matFileName = 'DataSet.mat';
 
 save(matFileName, 'allImages');
+
+load('DataSet.mat', 'allImages')
+
+for i = 1:16 
+
+    img = allImages{i}; 
+    imshow(img);
+
+end
 
 
