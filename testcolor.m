@@ -1,11 +1,9 @@
 
-img = imread("DB2/il_12.jpg");
+img = imread("DB2/il_01.jpg");
 
 
 
 correctedImg = GrayWorld(img);
-% WhitePatch(img);
-
 
 %imshow(img)
 %subplot(1, 2, 1)
