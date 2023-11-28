@@ -35,9 +35,24 @@ else
   
     correctedImg = cat(3, R .* correctionFactor(1), G .* correctionFactor(2), B .* correctionFactor(3));
     
-end
+end   
+
+
+    % Display the original image
+    figure;
+    subplot(1, 2, 1);
+    imshow(Im);
+    title('Original Image');
+
+    % Display the corrected image
+    subplot(1, 2, 2);
+    imshow(correctedImg);
+    title('Corrected Image');
+
+    % Return the corrected image
+    return
+
+
  
- 
-return
 
 end

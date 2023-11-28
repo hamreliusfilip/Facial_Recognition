@@ -1,4 +1,4 @@
-function [scaledImage] = Face_Alignment_Normalization(IMG, leftEye, rightEye)
+function [croppedImage] = Face_Alignment_Normalization(IMG, leftEye, rightEye)
 
 %------- Padding -------%
 target_size = [450, 450];
@@ -28,7 +28,6 @@ delta_y = round(abs(mid_y - leftEye(1,2)));
 % Pad the image
 padded_image = padarray(IMG, [200, 200], 0, 'both');
 
-
 translatedImage = imtranslate(padded_image, [delta_x, delta_y]);
 
 %---------ROTATE---------%
@@ -45,11 +44,11 @@ angle_between_eyes = atan2(diff_y, diff_x) * 180 / pi;
 if (leftEye(1,2) > rightEye(1,2))
 
     % Rotate the image to align the eyes horizontally
-    rotatedImage = imrotate(translatedImage, angle_between_eyes, 'bicubic', 'crop');
+    rotatedImage = imrotate(translatedImage, -angle_between_eyes, 'bicubic', 'loose');
 
 else 
 
-    rotatedImage = imrotate(translatedImage, -angle_between_eyes, 'bicubic', 'crop');
+    rotatedImage = imrotate(translatedImage, angle_between_eyes, 'bicubic', 'loose');
 
 end
 
@@ -66,7 +65,7 @@ end
 desired_eye_distance = 150; 
 
 scale_factor = desired_eye_distance/diff_x;
-scaledImage  = imresize(rotatedImage, scale_factor);
+scaledImage  = imresize(rotatedImage, scale_factor, 'bicubic');
 
 
 % Scale rotated image if dist is not equal 0
@@ -76,12 +75,13 @@ scaledImage  = imresize(rotatedImage, scale_factor);
 %end
 
 % Beräknar ny mittpunkt 
-%[height_scaled, width_scaled, ~] = size(scaledImage); % [pixel in x, pixel in y, rgb]
-%center_x = width_scaled/2;
-%center_y = height_scaled/2;
+[height_scaled, width_scaled, ~] = size(scaledImage); % [pixel in x, pixel in y, rgb]
+center_x = width_scaled/2;
+center_y = height_scaled/2;
 
 % Croppar bilden
-%margin_x = 40;
-%croppedImage = imcrop(scaledImage, [(center_x-margin_x) (center_y-60) desired_eye_distance+2*margin_x 230]);
+margin_x = 40;
+margin_y = 40;
+croppedImage = imcrop(scaledImage, [(center_x-margin_x) (center_y-margin_y) desired_eye_distance+2*margin_x desired_eye_distance+2*margin_y]);
 
 end
