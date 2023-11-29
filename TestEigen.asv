@@ -1,0 +1,47 @@
+function [result] = TestEigen(img)
+
+    commonSize = [400, 400];
+
+    % Convert the resized image to grayscale
+    grayScale = rgb2gray(img);
+
+    % Resize the image to the common size
+    resizedImg = imresize(grayScale, commonSize);
+   
+    % Vectorize the grayscale image and store in the matrix
+    imgVector = double(resizedImg(:));
+   
+
+% Load mean
+load('meanFaceVector.mat', 'meanFaceVector');
+
+% Load training set
+load('TrainingSet.mat','TrainingSet');
+
+A = imgVector - meanFaceVector';
+A_t = A';
+
+[eigenVector, eigenValue] = eig(A_t*A);
+
+u_i = A * eigenVector;
+
+[eigenValuesSorted, order] = sort(diag(eigenValue), 'descend');
+u_i = u_i(:,order);
+
+% Norm
+for i = 1:size(u_i,2)
+    u_i(:,i) = u_i(:,i) / norm(u_i(:,i));
+end
+
+
+for i = 1:15
+    eigenface = TrainingSet.(['Eigenface_', num2str(i)]);
+    
+    % Perform multiplication with the current eigenface
+    result = A .* eigenface(:);
+   
+    size(result)
+end
+
+
+end
