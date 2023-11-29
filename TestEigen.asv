@@ -1,47 +1,49 @@
-function [result] = TestEigen(img)
+function [id] = TestEigen(img)
 
+    load('meanFaceVector.mat', 'meanFaceVector');
+    load('eigenfacesStruct.mat', 'eigenfacesStruct');
+
+%     for i = 1:15
+%     
+%         eigenfaceMatrix = eigenfacesStruct.(['eigenface', num2str(i)]);
+%         subplot(3,5,i);
+%         imshow(eigenfaceMatrix, []);
+%    
+%     end
+    
     commonSize = [400, 400];
 
-    % Convert the resized image to grayscale
     grayScale = rgb2gray(img);
 
-    % Resize the image to the common size
     resizedImg = imresize(grayScale, commonSize);
-   
-    % Vectorize the grayscale image and store in the matrix
+
     imgVector = double(resizedImg(:));
-   
 
-% Load mean
-load('meanFaceVector.mat', 'meanFaceVector');
+    diff = imgVector' - meanFaceVector;
 
-% Load training set
-load('TrainingSet.mat','TrainingSet');
+    diff = reshape(diff, [], 1);
 
-A = imgVector - meanFaceVector';
-A_t = A';
+    weights = zeros(1, 15);
 
-[eigenVector, eigenValue] = eig(A_t*A);
+    for i = 1:15
+        eigenfaceMatrix = eigenfacesStruct.(['eigenface', num2str(i)]);
+        eigenfaceMatrix = eigenfaceMatrix(:);
+        weights(i) = eigenfaceMatrix' * diff;
+    end
 
-u_i = A * eigenVector;
-
-[eigenValuesSorted, order] = sort(diag(eigenValue), 'descend');
-u_i = u_i(:,order);
-
-% Norm
-for i = 1:size(u_i,2)
-    u_i(:,i) = u_i(:,i) / norm(u_i(:,i));
-end
-
-
-for i = 1:15
-    eigenface = TrainingSet.(['Eigenface_', num2str(i)]);
+    length(weights(3))
+    min_diff = Inf;
+    id = 0;
     
-    % Perform multiplication with the current eigenface
-    result = A .* eigenface(:);
-   
-    size(result)
-end
+
+    for i = 1:15
+        weight_diff = abs(norm(weights - weights(i)));
+
+        if weight_diff < min_diff
+            min_diff = weight_diff;
+            id = i;
+        end
+    end
 
 
 end

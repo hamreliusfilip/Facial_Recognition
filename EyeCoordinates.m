@@ -1,5 +1,6 @@
 function [leftEye, rightEye] = EyeCoordinates(Eyes, Mouth)
-   
+    warning('off');
+
     stats_Mouth = regionprops("table", Mouth, "Centroid", "MajorAxisLength", "MinorAxisLength");
 
     mouthCentroid = stats_Mouth.Centroid(1, :);
@@ -66,5 +67,5 @@ function [leftEye, rightEye] = EyeCoordinates(Eyes, Mouth)
             end
     end 
     
-   
+       warning('on');
 end

@@ -1,21 +1,16 @@
-
 function [] = TrainEigen()
+
+load('Dataset.mat', 'allImages')
 
 % Parameters
 commonSize = [400, 400];
-imageFolderPath = 'DB1';
-
-% Load images and compute mean face
-imageFiles = dir(fullfile(imageFolderPath, '*.jpg'));
-
-% Get number of images
-numImages = numel(imageFiles);
 
 % Initialize the matrix to store the centered image vectors
-imageData = zeros(numImages, prod(commonSize));
+imageData = zeros(16, prod(commonSize));
 
-for i = 1:numImages
-    img = imread(fullfile(imageFolderPath, imageFiles(i).name));
+for i = 1:16
+    
+    img = allImages{i}; 
     
     % Convert the resized image to grayscale
     grayScale = im2gray(img);
@@ -27,6 +22,7 @@ for i = 1:numImages
     imgVector = double(resizedImg(:));
    
     imageData(i, :) = reshape(imgVector, 1, []);
+  
 end
 
 % Compute the mean face vector
@@ -47,18 +43,15 @@ featureVector = eigenVectors(:, 1:15);
 eigenfaceSize = [400, 400];
 
 % Create a structure to organize eigenfaces
-% TrainingSet = struct();
+eigenfacesStruct = struct();
 
 % Reshape and display the first 10 eigenfaces
 for i = 1:15
     eigenface = reshape(featureVector(:, i), eigenfaceSize);
-    subplot(3, 5, i);
-    imshow(eigenface, []);
-    title(['Eigenface ', num2str(i)]);
-    % TrainingSet.(['Eigenface_', num2str(i)]) = eigenface;
+    eigenfacesStruct.(['eigenface', num2str(i)]) = eigenface;
 end
 
-% % Save the structure to a .mat file
-% save('TrainingSet.mat', 'TrainingSet');
+% Save the structure to a .mat file
+save('eigenfacesStruct.mat', 'eigenfacesStruct');
 
 end

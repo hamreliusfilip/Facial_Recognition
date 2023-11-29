@@ -13,20 +13,20 @@ IMG = imcrop(IMG_Initial, cropRegion);
 
 %------------------------ Grey World Assumption  -----------------------------%
 
-IMG_Grey_World = ColorCorrection(IMG); % Används ej
+%IMG_Grey_World = ColorCorrection(IMG); % Används ej
 
 %------------------------------- Eye Map  ------------------------------------%
 
-IMG_Eye_Map = EyeMap(IMG_Grey_World);
+IMG_Eye_Map = EyeMap(IMG);
 
 %--------------------- Skin Color Dedection with HSV  ------------------------%
 
-IMG_Skin_Color = SkinColorDedection(IMG_Grey_World); 
+IMG_Skin_Color = SkinColorDedection(IMG); 
 IMG_Skin_Color = ~IMG_Skin_Color;
 
 %------------------------------- Mouth Mask  ---------------------------------%
 
-IMG_Mouth_Map = MouthMap(IMG_Grey_World);
+IMG_Mouth_Map = MouthMap(IMG);
 
 se = strel('disk',5); 
 IMG_Mouth_Map = imopen(IMG_Mouth_Map, se);
