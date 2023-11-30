@@ -1,4 +1,4 @@
-function [id] = TestEigen(img)
+function [featureVector] = TestEigen(img)
 
     load('meanFaceVector.mat', 'meanFaceVector');
     load('eigenfacesMatrix.mat', 'eigenfacesMatrix');
@@ -15,18 +15,16 @@ function [id] = TestEigen(img)
     
     diff = reshape(diff, [], 1);
 
-    weights = zeros(1, 15);
+    % Initialize featureVector
+    featureVector = zeros(15, 1);
 
-  for i = 1:15
+    for i = 1:15
         % Extract each eigenface vector from the matrix
         eigenfaceVector = eigenfacesMatrix(:, i);
         
-        weights(i) = abs(eigenfaceVector' * diff);
+        % Calculate the weight for each eigenface
+        weights = abs(eigenfaceVector' * diff);
+        featureVector(i) = weights;
     end
-
-    [~, minIndex] = min(weights);
-    id = minIndex;
     
-    % Lägg till treshold
-
 end
