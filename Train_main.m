@@ -19,9 +19,6 @@ allImages = cell(16, 1);
  
     allImages{i} = img; 
     
- 
-    
-
  end 
 
  matFileName = 'DataSet.mat';

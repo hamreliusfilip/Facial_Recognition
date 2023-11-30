@@ -1,7 +1,7 @@
 
 clear 
      
-IMG_Initial = imread("DB1/db1_05.jpg");
+IMG_Initial = imread("DB1/db1_01.jpg");
  
 [IMG,leftEye,rightEye] = Face_Detection(IMG_Initial);
  

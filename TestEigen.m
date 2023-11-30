@@ -18,13 +18,16 @@ function [id] = TestEigen(img)
     weights = zeros(1, 15);
 
     for i = 1:15
+        
         eigenfaceMatrix = eigenfacesStruct.(['eigenface', num2str(i)]);
         eigenfaceMatrix = eigenfaceMatrix(:);
         weights(i) = abs(eigenfaceMatrix' * diff);
+        
     end
 
-    id = 0;
     [~, minIndex] = min(weights);
     id = minIndex;
+    
+    % Lägg till treshold
 
 end
