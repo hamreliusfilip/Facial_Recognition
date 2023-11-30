@@ -28,9 +28,6 @@ end
 % Compute the mean face vector
 meanFaceVector = mean(imageData);
 
-% Save the meanFaceVector to a .mat file
-save('meanFaceVector.mat', 'meanFaceVector');
-
 % Subtract the mean face vector from each vector
 centeredImageData = imageData - meanFaceVector;
 
@@ -39,19 +36,13 @@ centeredImageData = imageData - meanFaceVector;
 
 featureVector = eigenVectors(:, 1:15);
 
-% Assuming commonSize = [400, 400]
-eigenfaceSize = [400, 400];
+% Save the meanFaceVector to a .mat file
+save('meanFaceVector.mat', 'meanFaceVector');
 
-% Create a structure to organize eigenfaces
-eigenfacesStruct = struct();
+% Save eigenfaces in a matrix
+eigenfacesMatrix = reshape(featureVector, [prod(commonSize), 15]);
 
-% Reshape and display the first 10 eigenfaces
-for i = 1:15
-    eigenface = reshape(featureVector(:, i), eigenfaceSize);
-    eigenfacesStruct.(['eigenface', num2str(i)]) = eigenface;
-end
-
-% Save the structure to a .mat file
-save('eigenfacesStruct.mat', 'eigenfacesStruct');
+% Save the eigenfaces matrix to a .mat file
+save('eigenfacesMatrix.mat', 'eigenfacesMatrix');
 
 end

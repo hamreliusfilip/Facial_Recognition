@@ -67,13 +67,6 @@ desired_eye_distance = 150;
 scale_factor = desired_eye_distance/diff_x;
 scaledImage  = imresize(rotatedImage, scale_factor, 'bicubic');
 
-
-% Scale rotated image if dist is not equal 0
-%if diff_x ~= 0
-%    scale_factor = desired_eye_distance/diff_x;
-%    scaledImage  = imresize(rotatedImage, scale_factor);
-%end
-
 % Beräknar ny mittpunkt 
 [height_scaled, width_scaled, ~] = size(scaledImage); % [pixel in x, pixel in y, rgb]
 center_x = width_scaled/2;

@@ -1,7 +1,7 @@
 function [id] = TestEigen(img)
 
     load('meanFaceVector.mat', 'meanFaceVector');
-    load('eigenfacesStruct.mat', 'eigenfacesStruct');
+    load('eigenfacesMatrix.mat', 'eigenfacesMatrix');
     
     commonSize = [400, 400];
 
@@ -17,12 +17,11 @@ function [id] = TestEigen(img)
 
     weights = zeros(1, 15);
 
-    for i = 1:15
+  for i = 1:15
+        % Extract each eigenface vector from the matrix
+        eigenfaceVector = eigenfacesMatrix(:, i);
         
-        eigenfaceMatrix = eigenfacesStruct.(['eigenface', num2str(i)]);
-        eigenfaceMatrix = eigenfaceMatrix(:);
-        weights(i) = abs(eigenfaceMatrix' * diff);
-        
+        weights(i) = abs(eigenfaceVector' * diff);
     end
 
     [~, minIndex] = min(weights);
