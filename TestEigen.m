@@ -44,5 +44,12 @@ function [id] = TestEigen(img)
             smallestDistance = distance;
             id = i; % Store the index of the closest match
         end
-    end 
+    end
+    
+%     min_val = 0.3;
+%     
+%     if(smallestDistance > min_val)
+%         id = 0;
+%     end
+
 end
