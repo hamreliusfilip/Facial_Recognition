@@ -13,7 +13,7 @@ IMG = imcrop(IMG_Initial, cropRegion);
 
 %------------------------ Grey World Assumption  -----------------------------%
 
-%IMG_Grey_World = ColorCorrection(IMG); % Används ej
+IMG_Grey_World = GrayWorld(IMG); % Används ej
 
 %------------------------------- Eye Map  ------------------------------------%
 

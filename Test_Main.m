@@ -1,10 +1,10 @@
 
 % % clear 
      
-IMG_load = imread("DB1/db1_10.jpg");
+IMG_load = imread("DB1/db1_04.jpg");
 
 %IMG_Initial = imrotate(IMG_load, 5,'bilinear','crop');
-%IMG_Initial = imrotate(IMG_load, -5,'bilinear','crop');
+IMG_Initial = imrotate(IMG_load, -5,'bilinear','crop');
 %IMG_Initial = imtranslate(IMG_load, [30,0]);
 %IMG_Initial = imtranslate(IMG_load, [0,30]);
 %IMG_Initial = imresize(IMG_load, 1.1);
@@ -16,22 +16,25 @@ IMG_load = imread("DB1/db1_10.jpg");
  
 img = Face_Alignment_Normalization(IMG,leftEye,rightEye); 
 
-imshow(IMG)
+imshow(IMG) 
 hold on
 scatter(leftEye(:,1),leftEye(:,2), 'r', 'filled');  % Reverse indices due to row-column ordering
 scatter(rightEye(:,1), rightEye(:,2), 'b', 'filled');
+
+figure
+hold off
+imshow(img)
+
     
 test = TestEigen(img);
 disp(test)
 
-
-
 %ROTATE 5
-% 10 -> 13 Höger öga fel
-% 13 -> 1 ögonen korrekta????
+% 6 -> 4 ögonen korrekta
+% 13 -> 1 ögonen korrekta
 
 %ROTATE -5
-% Alla funkar
+% 4 -> höger öga
 
 %TRANSLATE [30,0]
 % 13 -> 1 dock konstigt eftersom ögonen blir korrekta

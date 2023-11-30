@@ -1,7 +1,7 @@
 
 % % clear 
      
-IMG_load = imread("DB1/db1_16.jpg");
+IMG_load = imread("DB1/db1_01.jpg");
 
 %IMG_Initial = imrotate(IMG_load, 5,'bilinear','crop');
 %IMG_Initial = imrotate(IMG_load, -5,'bilinear','crop');
@@ -9,22 +9,21 @@ IMG_load = imread("DB1/db1_16.jpg");
 %IMG_Initial = imtranslate(IMG_load, [0,30]);
 %IMG_Initial = imresize(IMG_load, 1.1);
 %IMG_Initial = imresize(IMG_load, 0.9);
-%IMG_Initial = IMG_load.*1.7;
+IMG_Initial = IMG_load.*1.3;
 %IMG_Initial = IMG_load.*0.7;
  
-[IMG,leftEye,rightEye] = Face_Detection(IMG_Initial);
+[IMG,leftEye,rightEye] = Face_Detection(IMG_load);
  
 img = Face_Alignment_Normalization(IMG,leftEye,rightEye); 
 
-imshow(IMG)
-hold on
-scatter(leftEye(:,1),leftEye(:,2), 'r', 'filled');  % Reverse indices due to row-column ordering
-scatter(rightEye(:,1), rightEye(:,2), 'b', 'filled');
+%imshow(IMG)
+
+% hold on
+% scatter(leftEye(:,1),leftEye(:,2), 'r', 'filled');  % Reverse indices due to row-column ordering
+% scatter(rightEy e(:,1), rightEye(:,2), 'b', 'filled');
     
 test = TestEigen(img);
 disp(test)
-
-
 
 %ROTATE 5
 % 10 -> 13 Höger öga fel
