@@ -1,5 +1,7 @@
 function outImg = GrayWorld(inImg)
     
+    inImg = imread("DB1/db1_1.jpg");
+    inImg = 0.7.*inImg;
 
     red = double(inImg(:,:,1));
     green = double(inImg(:,:,2));
