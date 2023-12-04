@@ -1,7 +1,7 @@
 
 % % clear 
      
-IMG_load = imread("DB1/db1_16.jpg");
+IMG_load = imread("DB1/db1_01.jpg");
 
 %IMG_Initial = imrotate(IMG_load, 5,'bilinear','crop');
 %IMG_Initial = imrotate(IMG_load, -5,'bilinear','crop');
@@ -10,7 +10,8 @@ IMG_load = imread("DB1/db1_16.jpg");
 %IMG_Initial = imresize(IMG_load, 1.1);
 %IMG_Initial = imresize(IMG_load, 0.9);
 %IMG_Initial = IMG_load.*1.1;
-%IMG_Initial = IMG_load.*0.7;
+IMG_Initial = IMG_load.*0.7;
+%imshow(IMG_Initial)
  
 [IMG,leftEye,rightEye] = Face_Detection(IMG_Initial);
  
