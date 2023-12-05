@@ -58,13 +58,5 @@ function outImg = GrayWorld(inImg)
     outImg(:,:,2) = uint8(255 * green);
     outImg(:,:,3) = uint8(255 * blue);
 
-    % Display the original and corrected images side by side
-    subplot(1, 2, 1);
-    imshow(inImg);
-    title('Original Image');
-
-    subplot(1, 2, 2);
-    imshow(outImg);
-    title('Corrected Image');
     
 end

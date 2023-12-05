@@ -1,31 +1,31 @@
-function [grayImage]=SkinColorDedection(Im)
+function [binaryGrayResultImage]=SkinColorDedection(Im)
 
-  height = size(Im,1);
-    width = size(Im,2);
+imageHeight = size(Im, 1);
+imageWidth = size(Im, 2);
+binaryImage = zeros(imageHeight, imageWidth);
 
-    binaryImg = zeros(height,width);
+ycbcrImage = rgb2ycbcr(Im);
+cbChannel = ycbcrImage(:,:,2);
+crChannel = ycbcrImage(:,:,3);
 
-    img_ycbcr = rgb2ycbcr(Im);
-    Cb = img_ycbcr(:,:,2);
-    Cr = img_ycbcr(:,:,3);
-    
-    [r,c] = find(Cb>=77 & Cb<=200 & Cr>=134 & Cr<=173);
-    numind = size(r,1);
+[rowIndices, colIndices] = find(cbChannel >= 77 & cbChannel <= 200 & crChannel >= 134 & crChannel <= 173);
+numIndices = size(rowIndices, 1);
 
-    for i=1:numind
-        binaryImg(r(i),c(i)) = 1;
-    end
+for i = 1:numIndices
+    binaryImage(rowIndices(i), colIndices(i)) = 1;
+end
 
-    SE1 = strel('disk', 8, 4);
+structuringElement = strel('disk', 8, 4);
 
-    openImg = imopen(binaryImg, SE1);
-    mask = imclose(openImg, SE1);
-    
-    rgbFaceMask = Im.*uint8(mask);
-    image = rgbFaceMask;
-    image = im2double(image); 
-    
-    grayImage = rgb2gray(image);
-    grayImage = imbinarize(grayImage);
+openedImage = imopen(binaryImage, structuringElement);
+mask = imclose(openedImage, structuringElement);
+
+rgbFaceMaskedImage = Im .* uint8(mask);
+resultImage = rgbFaceMaskedImage;
+resultImage = im2double(resultImage);
+
+grayResultImage = rgb2gray(resultImage);
+binaryGrayResultImage = imbinarize(grayResultImage);
+
    
 return; 
