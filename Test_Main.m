@@ -1,6 +1,4 @@
 
-% % clear 
-     
 IMG_load = imread("DB1/db1_16.jpg");
 
 %IMG_Initial = imrotate(IMG_load, 5,'bilinear','crop');

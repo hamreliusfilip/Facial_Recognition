@@ -3,6 +3,10 @@ function [leftEye, rightEye] = EyeCoordinates(Eyes, Mouth)
 
     stats_Mouth = regionprops("table", Mouth, "Centroid", "MajorAxisLength", "MinorAxisLength");
 
+    if isempty(stats_Mouth)
+    disp('Bilden är för dålig, ingen mun hittades');
+    end
+
     mouthCentroid = stats_Mouth.Centroid(1, :);
     mouthy = round(mouthCentroid(2));
     
@@ -12,6 +16,10 @@ function [leftEye, rightEye] = EyeCoordinates(Eyes, Mouth)
     Rmax = 50;
     
     [centersDark] = imfindcircles(Eyes,[Rmin Rmax],'ObjectPolarity','dark','Sensitivity', 0.90);
+    
+    if (length(centersDark) < 2)
+        disp('Bilden är för dålig, inga ögon hittades'); 
+    end 
       
     leftEye = centersDark(1,:);
     rightEye = centersDark(2,:);
