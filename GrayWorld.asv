@@ -1,72 +1,85 @@
 function outImg = GrayWorld(inImg)
     
-    inImg = imread("DB1/db1_1.jpg");
-    inImg = 0.7.*inImg;
 
     red = double(inImg(:,:,1));
     green = double(inImg(:,:,2));
     blue = double(inImg(:,:,3));
 
-    %=====Remap tone=========
-    maxred = max(red(:));
-    maxgreen = max(green(:));
-    maxblue = max(blue(:));
+    % Find the max values in each channel
+    rMax = max(red(:));
+    gMax = max(green(:));
+    bMax = max(blue(:));
 
-    minred = min(red(:));
-    mingreen = min(green(:));
-    minblue = min(blue(:));
+    % Normalize each channel using the max values
+    red = red / rMax;
+    green = green / gMax;
+    blue = blue / bMax;
 
-    red = (red - minred) / (maxred - minred);
-    green = (green - mingreen) / (maxgreen - mingreen);
-    blue = (blue - minblue) / (maxblue - minblue);
-    
-    %========Gray world============
-    rMean = mean(red(:));
-    gMean = mean(green(:)); 
-    bMean = mean(blue(:));
-
-    alpha = gMean / rMean;
-    beta = gMean / bMean;
-
-    red = red .* alpha;
-    blue = blue .* beta;
-
-    sizeIn = size(red);
-    rgbMax = 0;
-    rMax = 0;
-    gMax = 0;
-    bMax = 0;
-    
-    %========White patch============
-    for i = 1:sizeIn(1)
-        for j = 1:sizeIn(2)
-
-           if red(i,j) + green(i,j) + blue(i,j) > rgbMax
-                rgbMax = red(i,j) + green(i,j) + blue(i,j);
-                rMax = red(i,j);
-                gMax = green(i,j);
-                bMax = blue(i,j);
-           end
-        end
-    end
-   
-    alfa2 = gMax / rMax;
-    beta2 = gMax / bMax;
-
-    red = red .* alfa2;
-    blue = blue .* beta2;
-
+    % Combine the normalized channels
     outImg(:,:,1) = uint8(255 * red);
     outImg(:,:,2) = uint8(255 * green);
     outImg(:,:,3) = uint8(255 * blue);
 
-    % Display the original and corrected images side by side
-    subplot(1, 2, 1);
-    imshow(inImg);
-    title('Original Image');
 
-    subplot(1, 2, 2);
-    imshow(outImg);
-    title('Corrected Image');
+
+%%%%%%%% ENIGS KOD, 86% acc %%%%%%%%%%%
+
+    % red = double(inImg(:,:,1));
+    % green = double(inImg(:,:,2));
+    % blue = double(inImg(:,:,3));
+    % 
+    % %=====Remap tone=========
+    % maxred = max(red(:));
+    % maxgreen = max(green(:));
+    % maxblue = max(blue(:));
+    % 
+    % minred = min(red(:));
+    % mingreen = min(green(:));
+    % minblue = min(blue(:));
+    % 
+    % red = (red - minred) / (maxred - minred);
+    % green = (green - mingreen) / (maxgreen - mingreen);
+    % blue = (blue - minblue) / (maxblue - minblue);
+    % 
+    % %========Gray world============
+    % rMean = mean(red(:));
+    % gMean = mean(green(:)); 
+    % bMean = mean(blue(:));
+    % 
+    % alpha = gMean / rMean;
+    % beta = gMean / bMean;
+    % 
+    % red = red .* alpha;
+    % blue = blue .* beta;
+    % 
+    % sizeIn = size(red);
+    % rgbMax = 0;
+    % rMax = 0;
+    % gMax = 0;
+    % bMax = 0;
+    % 
+    % %========White patch============
+    % for i = 1:sizeIn(1)
+    %     for j = 1:sizeIn(2)
+    % 
+    %        if red(i,j) + green(i,j) + blue(i,j) > rgbMax
+    %             rgbMax = red(i,j) + green(i,j) + blue(i,j);
+    %             rMax = red(i,j);
+    %             gMax = green(i,j);
+    %             bMax = blue(i,j);
+    %        end
+    %     end
+    % end
+    % 
+    % alfa2 = gMax / rMax;
+    % beta2 = gMax / bMax;
+    % 
+    % red = red .* alfa2;
+    % blue = blue .* beta2;
+    % 
+    % outImg(:,:,1) = uint8(255 * red);
+    % outImg(:,:,2) = uint8(255 * green);
+    % outImg(:,:,3) = uint8(255 * blue);
+
     
 end
