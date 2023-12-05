@@ -1,7 +1,7 @@
 
 % % clear 
      
-IMG_load = imread("DB1/db1_01.jpg");
+IMG_load = imread("DB1/db1_16.jpg");
 
 %IMG_Initial = imrotate(IMG_load, 5,'bilinear','crop');
 %IMG_Initial = imrotate(IMG_load, -5,'bilinear','crop');
@@ -9,8 +9,8 @@ IMG_load = imread("DB1/db1_01.jpg");
 %IMG_Initial = imtranslate(IMG_load, [0,30]);
 %IMG_Initial = imresize(IMG_load, 1.1);
 %IMG_Initial = imresize(IMG_load, 0.9);
-%IMG_Initial = IMG_load.*1.1;
-IMG_Initial = IMG_load.*0.7;
+IMG_Initial = IMG_load.*1.1;
+%IMG_Initial = IMG_load.*0.7;
 %imshow(IMG_Initial)
  
 [IMG,leftEye,rightEye] = Face_Detection(IMG_Initial);
@@ -33,7 +33,7 @@ disp(test)
 % Alla fungerar 
 
 %ROTATE 5
-% Alla fungerar
+% 14 -> 15
 
 %ROTATE -5
 % Alla fungerar 
@@ -42,23 +42,16 @@ disp(test)
 % Alla fungerar
 
 %TRANSLATE [0,30]
-% 3 -> 2
-% 4 -> 13
-% 6 -> 1
-% 8 -> 10
-% 11 -> 1
-% 13 -> 1
-% 14 -> 2
+% 2, 5, 7, 9, 10, 12, 15, 16 fungerar
 
 %SCALING +10%
 % 7 -> 4 (fel ögon) 
-% 12 -> error 
 
 %SCALING -10%
-% 4 -> error 
+% 7 -> 11 
 
-%Tone 30%
-% Alla fel utom 10an
+%Tone 10%
+% 1, 3, 6, 8, 9, 10, 11, 12, 13 fungerar
 
 %Tone -30%
-% Alla fel
+% Alla fungerar

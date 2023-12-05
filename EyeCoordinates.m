@@ -28,9 +28,15 @@ function [leftEye, rightEye] = EyeCoordinates(Eyes, Mouth)
         
         for i = 1:length(centersDark) 
             if((leftEye(1,1) > 180))
+                
+                    temp = leftEye(1,1); 
                     leftEye = centersDark(i,:);
-                     y1 = leftEye(1,1); 
-                     y2 = leftEye(1,2);  
+                    y1 = leftEye(1,1); 
+                    y2 = leftEye(1,2);
+                    
+                    if(((centersDark(i,1) == temp(1,1))) && (rightEye(1,1) < 180))
+                        rightEye = centersDark(i,:); 
+                    end
             end 
         end 
         
@@ -38,7 +44,7 @@ function [leftEye, rightEye] = EyeCoordinates(Eyes, Mouth)
                 
                 if((abs((centersDark(i,1) - leftEye(1,1))) < 150) && ... 
                      (abs((centersDark(i,1) - leftEye(1,1))) > 80)  && ...
-                     (i ~= length(centersDark))) 
+                     (i ~= length(centersDark)) && ((centersDark(i,1) ~= leftEye(1,1)))) 
 
                         rightEye = centersDark(i,:);
 
@@ -60,6 +66,6 @@ function [leftEye, rightEye] = EyeCoordinates(Eyes, Mouth)
         leftEye = rightEye;
         rightEye = temp;
     end
-    
+   
        warning('on');
 end

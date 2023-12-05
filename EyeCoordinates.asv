@@ -20,24 +20,36 @@ function [leftEye, rightEye] = EyeCoordinates(Eyes, Mouth)
     x2 = rightEye(1,2);
     y1 = leftEye(1,1);
     y2 = leftEye(1,2);
-  
+   
     slope = (rad2deg((y2 - y1) / (x2 - x1)));
+    
+    length(centersDark)
     
     if ((slope > 5) && (slope < -5) || (abs((rightEye(1,1) - leftEye(1,1))) < 80) || (abs((rightEye(1,1) - leftEye(1,1))) > 150) )
 
-            for i = 2:length(centersDark) - 1
+        
+        for i = 1:length(centersDark) 
+            if((leftEye(1,1) > 180))
                 
+                    temp = leftEye(1,1); 
+                    leftEye = centersDark(i,:);
+                    y1 = leftEye(1,1); 
+                    y2 = leftEye(1,2);
+                    
+                    if(((centersDark(i,1) = temp(1,1))))
+                    
+                    end
+            end 
+        end 
+        
+        leftEye
+        rightEye
+        
+            for i = 1:length(centersDark)
                 
-                
-%                 if(leftEye(1,1) > 190)
-%                     leftEye = centersDark(i,:); 
-%                      y1 = leftEye(1,1); 
-%                      y2 = leftEye(1,2);  
-%                 end 
-       
                 if((abs((centersDark(i,1) - leftEye(1,1))) < 150) && ... 
-                     (abs((centersDark(i,1) - leftEye(1,1))) > 115)  && ...
-                     (i ~= length(centersDark)) && (leftEye(1,1) < 180)) 
+                     (abs((centersDark(i,1) - leftEye(1,1))) > 80)  && ...
+                     (i ~= length(centersDark)) && ((centersDark(i,1) ~= leftEye(1,1)))) 
 
                         rightEye = centersDark(i,:);
 
@@ -59,6 +71,9 @@ function [leftEye, rightEye] = EyeCoordinates(Eyes, Mouth)
         leftEye = rightEye;
         rightEye = temp;
     end
+    
+%     leftEye 
+%     rightEye
     
        warning('on');
 end
