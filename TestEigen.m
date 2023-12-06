@@ -2,8 +2,8 @@ function [id] = TestEigen(img)
 
     load('meanFaceVector.mat', 'meanFaceVector');
     load('eigenfacesMatrix.mat', 'eigenfacesMatrix');
-    load('allWeights.mat', 'allWeights'); % Load training weights
-    load('allScores.mat', 'allScores'); % Load training scores
+    load('allWeights.mat', 'allWeights');
+    load('allScores.mat', 'allScores'); 
     
     commonSize = [400, 400];
 
@@ -41,15 +41,15 @@ function [id] = TestEigen(img)
         distance = norm(allScores(:, i) - testScores) + norm(allWeights(:, i) - testWeights);
         
         if (distance < smallestDistance)
-            smallestDistance = distance;
+            smallestDistance = distance
             id = i; % Store the index of the closest match
         end
     end
     
-%     min_val = 0.3;
-%     
-%     if(smallestDistance > min_val)
-%         id = 0;
-%     end
+     treshold = 40000;
+     
+     if(smallestDistance > treshold)
+         id = 0;
+     end
 
 end
