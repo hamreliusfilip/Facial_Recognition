@@ -41,12 +41,12 @@ function [id] = TestEigen(img)
         distance = norm(allScores(:, i) - testScores) + norm(allWeights(:, i) - testWeights);
         
         if (distance < smallestDistance)
-            smallestDistance = distance
+            smallestDistance = distance; 
             id = i; % Store the index of the closest match
         end
     end
     
-     treshold = 40000;
+     treshold = 12000;
      
      if(smallestDistance > treshold)
          id = 0;
