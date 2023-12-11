@@ -4,6 +4,7 @@ function [id] = TestEigen(img)
     load('eigenfacesMatrix.mat', 'eigenfacesMatrix');
     load('allWeights.mat', 'allWeights');
     
+    % Set common size for image processing
     commonSize = [300, 300];
 
     % Face detection and alignment
@@ -16,14 +17,16 @@ function [id] = TestEigen(img)
 
     % Subtract mean face vector
     diff = resizedImg(:) - meanFace;
-    qw = eigenfacesMatrix' * diff;
+        
+    % Project the query image onto the eigenfaces to get weights
+    queryWeights = eigenfacesMatrix' * diff;
 
     % Normalize the weights of the new image
     u = zeros(1, 16);
 
     % Normalization of the eigen vectors
     for i = 1:16
-        u(i) = norm(allWeights(:, i) - qw(:));
+        u(i) = norm(allWeights(:, i) - queryWeights(:));
     end
 
     % Find the smallest error

@@ -2,9 +2,10 @@ function [] = TrainEigen()
 
     load('Dataset.mat', 'allImages')
 
-    % Parameters
+    % Set common size for image processing
     commonSize = [300, 300];
-    numImages = numel(allImages); % Number of images in the dataset
+
+    numImages = numel(allImages); 
     
     % Initialize matrix to store centered image vectors
     imageData = zeros(prod(commonSize), numImages);
@@ -12,6 +13,7 @@ function [] = TrainEigen()
     for i = 1:numImages
         img = allImages{i}; 
 
+        % Detect face and normalize the image
         [IMG, leftEye, rightEye] = Face_Detection(img);
         img = Face_Alignment_Normalization(IMG, leftEye, rightEye);
 
@@ -31,21 +33,14 @@ function [] = TrainEigen()
     % Compute the mean face vector
     meanFace = mean(imageData, 2);
 
-    % Reshape meanFace to its original size
-    meanFaceImage = reshape(meanFace, commonSize);
-
-    % Specify the file name for the PNG image
-    outputFileName = 'meanFaceImage.png';
-
-    % Save the meanFaceImage as a PNG file
-    imwrite(meanFaceImage, outputFileName);
-
     % Subtract the mean face vector from each vector
     A = imageData - meanFace;
 
     % Create eigen vectors 
     C = A' * A;
     [v, ~] = eig(C);
+
+    % Compute eigenfaces
     u = A * v;
     
     % Normalization of the eigen vectors
@@ -53,14 +48,14 @@ function [] = TrainEigen()
         u(:, i) = u(:, i) / norm(u(:, i));
     end
 
-    % Weights
+    % Calculate weights for all images
     allWeights = u' * A;
-
-    % Save the meanFaceVector to a .mat file
-    save('meanFaceVector.mat', 'meanFace');
 
     % Save eigenfaces in a matrix
     eigenfacesMatrix = u;
+
+    % Save the meanFaceVector to a .mat file
+    save('meanFaceVector.mat', 'meanFace');
 
     % Save the eigenfaces matrix to a .mat file
     save('eigenfacesMatrix.mat', 'eigenfacesMatrix');
