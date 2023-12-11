@@ -61,18 +61,18 @@ end
 % Vill nu skala för att få samma avstånd mellan ögonen på alla bilder
 
 
-% Anger önskat avstånd mellan ögonen för de skalade bilderna
+% Specify the desired distance between the eyes for the scaled images
 desired_eye_distance = 150; 
 
 scale_factor = desired_eye_distance/diff_x;
 scaledImage  = imresize(rotatedImage, scale_factor, 'bicubic');
 
-% Beräknar ny mittpunkt 
+% Calc midpoint
 [height_scaled, width_scaled, ~] = size(scaledImage); % [pixel in x, pixel in y, rgb]
 center_x = width_scaled/2;
 center_y = height_scaled/2;
 
-% Croppar bilden
+% Crop image
 margin_x = 40;
 margin_y = 40;
 croppedImage = imcrop(scaledImage, [(center_x-margin_x) (center_y-margin_y) desired_eye_distance+2*margin_x desired_eye_distance+2*margin_y]);

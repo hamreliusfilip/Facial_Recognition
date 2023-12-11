@@ -1,18 +1,18 @@
 function [scaledImage] = Scale(Im)
 
-% Beräkna initialt avstånd mellan ögonen i den inlästa bilden
+% Calculate the initial distance between the eyes in the input image
 initial_eye_distance = sqrt((x_eye2 - x_eye1)^2 + (y_eye2 - y_eye1)^2);
 
-% Ange önskat avstånd mellan ögonen för de skalade bilderna
-desired_eye_distance = 150; % Ange det avstånd du vill ha
+% Specify the desired distance between the eyes for the scaled images
+desired_eye_distance = 150; % Set the desired distance as needed
 
-% Beräkna skalningsfaktorn baserat på det önskade avståndet och det initiala avståndet
+% Calculate the scaling factor based on the desired and initial eye distances
 scaling_factor = desired_eye_distance / initial_eye_distance;
 
-% Skala om bilden baserat på skalningsfaktorn
+% Resize the image based on the scaling factor
 scaledImage = imresize(rotatedImage, scaling_factor);
 
-% Visa den skalade bilden
-imshow(scaledImage);
+% Display the scaled image
+%imshow(scaledImage);
 
 end
