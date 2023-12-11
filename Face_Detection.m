@@ -21,7 +21,7 @@ IMG_Eye_Map = EyeMap(IMG_Color_Correction);
 
 %--------------------- Skin Color Dedection with HSV  ------------------------%
 
-IMG_Skin_Color = SkinColorDedection(IMG_Color_Correction); 
+IMG_Skin_Color = SkinColorDetection(IMG_Color_Correction); 
 IMG_Skin_Color = ~IMG_Skin_Color;
 
 %------------------------------- Mouth Mask  ---------------------------------%

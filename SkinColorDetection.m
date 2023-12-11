@@ -1,4 +1,4 @@
-function [output_image]=SkinColorDedection(Im)
+function [output_image]=SkinColorDetection(Im)
 
     % Height and Width of input Im
     height = size(Im, 1);
