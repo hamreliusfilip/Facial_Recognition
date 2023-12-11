@@ -1,55 +1,43 @@
 function [id] = TestEigen(img)
 
-    load('meanFaceVector.mat', 'meanFaceVector');
+    load('meanFaceVector.mat', 'meanFace');
     load('eigenfacesMatrix.mat', 'eigenfacesMatrix');
     load('allWeights.mat', 'allWeights');
-    load('allScores.mat', 'allScores'); 
     
-    commonSize = [400, 400];
+    commonSize = [300, 300];
+
+    % Face detection and alignment
+    [IMG, leftEye, rightEye] = Face_Detection(img);
+    img = Face_Alignment_Normalization(IMG, leftEye, rightEye);
+
+    img = im2double(img);
 
     grayScale = rgb2gray(img);
 
     resizedImg = imresize(grayScale, commonSize);
 
-    imgVector = double(resizedImg(:));
+    % Subtract mean face vector
+    diff = resizedImg(:) - meanFace;
+    qw = eigenfacesMatrix' * diff;
 
-    diff = imgVector' - meanFaceVector;
-    
-    diff = reshape(diff, [], 1);
+    % Normalize the weights of the new image
+    u = zeros(1, 16);
 
-    % Calculate weights and scores for the test image
-    testWeights = zeros(15, 1);
-    testScores = zeros(15, 1);
-
-    for i = 1:15
-        % Extract each eigenface vector from the matrix
-        eigenfaceVector = eigenfacesMatrix(:, i);
-        
-        % Calculate the weight for each eigenface
-        testWeights(i) = abs(eigenfaceVector' * diff);
-        
-        % Calculate the score for each eigenface
-        testScores(i) = eigenfaceVector' * diff;
+    % Normalization of the eigen vectors
+    for i = 1:16
+        u(i) = norm(allWeights(:, i) - qw(:));
     end
 
-    % Compare test image's weights and scores with training dataset
-    smallestDistance = inf;
-    id = 0; 
-    
-    for i = 1:size(allWeights, 2)
-        % Compute distance between test image weights/scores and each training sample
-        distance = norm(allScores(:, i) - testScores) + norm(allWeights(:, i) - testWeights);
-        
-        if (distance < smallestDistance)
-            smallestDistance = distance; 
-            id = i; % Store the index of the closest match
-        end
+    % Find the smallest error
+    [value, index] = min(u);
+
+    % Set a threshold to determine if it's a match 
+    threshold = 19.8;
+
+    if (value < threshold)
+        id = index;
+    else
+        id = 0; % No match
     end
     
-     treshold = 12000;
-     
-     if(smallestDistance > treshold)
-         id = 0;
-     end
-
 end
