@@ -9,11 +9,9 @@ function [id] = TestEigen(img)
     % Face detection and alignment
     [IMG, leftEye, rightEye] = Face_Detection(img);
     img = Face_Alignment_Normalization(IMG, leftEye, rightEye);
-
     img = im2double(img);
-
+    
     grayScale = rgb2gray(img);
-
     resizedImg = imresize(grayScale, commonSize);
 
     % Subtract mean face vector

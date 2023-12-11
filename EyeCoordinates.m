@@ -5,7 +5,7 @@ function [leftEye, rightEye] = EyeCoordinates(Eyes, Mouth)
     stats_Mouth = regionprops("table", Mouth, "Centroid", "MajorAxisLength", "MinorAxisLength");
 
     if isempty(stats_Mouth)
-    disp('Bilden är för dålig, ingen mun hittades');
+        disp('Bilden är för dålig, ingen mun hittades');
     end
 
     mouthCentroid = stats_Mouth.Centroid(1, :);

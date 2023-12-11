@@ -12,6 +12,6 @@ angle_between_eyes = atan2(dy, dx) * 180 / pi;
 rotatedImage = imrotate(translatedImage, angle_between_eyes, 'bicubic', 'crop');
 
 % Display the resulting image with the eyes centered and along the x-axis
-imshow(rotatedImage);
+%imshow(rotatedImage);
 
 end

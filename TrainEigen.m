@@ -8,7 +8,7 @@ function [] = TrainEigen()
     
     % Initialize matrix to store centered image vectors
     imageData = zeros(prod(commonSize), numImages);
-
+    
     for i = 1:numImages
         img = allImages{i}; 
 

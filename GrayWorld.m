@@ -1,6 +1,6 @@
 function outImg = GrayWorld(inImg)
     
-
+    
     red = double(inImg(:,:,1));
     green = double(inImg(:,:,2));
     blue = double(inImg(:,:,3));
