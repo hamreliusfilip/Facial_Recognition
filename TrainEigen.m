@@ -44,9 +44,9 @@ function [] = TrainEigen()
     A = imageData - meanFace;
 
     % Create eigen vectors 
-    C1 = A' * A;
-    [V, ~] = eig(C1);
-    u = A * V;
+    C = A' * A;
+    [v, ~] = eig(C);
+    u = A * v;
     
     % Normalization of the eigen vectors
     for i = 1:16
@@ -68,33 +68,4 @@ function [] = TrainEigen()
     % Save allWeights to a .mat file
     save('allWeights.mat', 'allWeights');
     
-
-    %%%% Saving eigenfaces images %%%%
-
-    % Specify the folder where you want to save the eigenfaces
-    outputFolder = 'Eigenfaces';
-
-    % Create the output folder if it doesn't exist
-    if ~exist(outputFolder, 'dir')
-        mkdir(outputFolder);
-    end
-
-    % Rescale eigenfaces to the original intensity range [0, 255]
-    scaledEigenfaces = (u - min(u(:))) * (255 / (max(u(:)) - min(u(:))));
-
-    % Iterate over each eigenface
-    for i = 1:size(scaledEigenfaces, 2)
-        % Reshape the eigenface to its original size
-        eigenface = reshape(scaledEigenfaces(:, i), commonSize);
-    
-        % Convert to uint8 (assuming original images were uint8)
-        eigenface = uint8(eigenface);
-    
-        % Specify the file name for the PNG image
-        outputFileName = fullfile(outputFolder, ['eigenface_', num2str(i), '.png']);
-    
-        % Save the eigenface as a PNG file
-        imwrite(eigenface, outputFileName);
-    end
-
 end
