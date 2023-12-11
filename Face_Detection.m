@@ -1,5 +1,5 @@
 
-function [IMG_Grey_World,leftEye,rightEye] = Face_Detection(IMG_Initial) 
+function [IMG_Color_Correction,leftEye,rightEye] = Face_Detection(IMG_Initial) 
 
 %----------------------- Clear, Import & Crop --------------------------------%
 
@@ -13,20 +13,20 @@ IMG = imcrop(IMG_Initial, cropRegion);
 
 %------------------------ Grey World Assumption  -----------------------------%
 
-IMG_Grey_World = GrayWorld(IMG);
+IMG_Color_Correction = ColorCorrection(IMG);
 
 %------------------------------- Eye Map  ------------------------------------%
 
-IMG_Eye_Map = EyeMap(IMG_Grey_World);
+IMG_Eye_Map = EyeMap(IMG_Color_Correction);
 
 %--------------------- Skin Color Dedection with HSV  ------------------------%
 
-IMG_Skin_Color = SkinColorDedection(IMG_Grey_World); 
+IMG_Skin_Color = SkinColorDedection(IMG_Color_Correction); 
 IMG_Skin_Color = ~IMG_Skin_Color;
 
 %------------------------------- Mouth Mask  ---------------------------------%
 
-IMG_Mouth_Map = MouthMap(IMG_Grey_World);
+IMG_Mouth_Map = MouthMap(IMG_Color_Correction);
 
 se = strel('disk',5); 
 IMG_Mouth_Map = imopen(IMG_Mouth_Map, se);
@@ -37,8 +37,8 @@ IMG_Mouth_Map = imclose(IMG_Mouth_Map, se);
 Eyes = IMG_Eye_Map - IMG_Skin_Color; 
 Mouth = IMG_Mouth_Map; 
 
-test = Eyes + Mouth; 
+face = Eyes + Mouth; 
 
-[leftEye, rightEye] = EyeCoordinates(test, Mouth);
+[leftEye, rightEye] = EyeCoordinates(face, Mouth);
 
 end 

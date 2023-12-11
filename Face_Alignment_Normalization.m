@@ -1,17 +1,5 @@
 function [croppedImage] = Face_Alignment_Normalization(IMG, leftEye, rightEye)
 
-%------- Padding -------%
-target_size = [450, 450];
- 
-% Calculate the amount of padding needed
-rows = size(IMG, 1);
-cols = size(IMG, 2);
-pad_rows = max(0, target_size(1) - rows);
-pad_cols = max(0, target_size(2) - cols);
-
-% Pad the image
-%padded_image = padarray(IMG, [pad_rows, pad_cols], 0, 'b');
-
 %------ Move left eye to center ------%
 
 % Get image dimensions
@@ -52,29 +40,27 @@ else
 
 end
 
-
-% Display the resulting image with the eyes centered and along the x-axis
-% imshow(rotatedImage);
-
 %---------SCALE---------%
 
-% Vill nu skala för att få samma avstånd mellan ögonen på alla bilder
-
-
-% Specify the desired distance between the eyes for the scaled images
+% Set desired eye distance for scaled images
 desired_eye_distance = 150; 
 
+% Calculate scale factor
 scale_factor = desired_eye_distance/diff_x;
 scaledImage  = imresize(rotatedImage, scale_factor, 'bicubic');
 
-% Calc midpoint
-[height_scaled, width_scaled, ~] = size(scaledImage); % [pixel in x, pixel in y, rgb]
-center_x = width_scaled/2;
-center_y = height_scaled/2;
+% Calculate new center point 
+[height_scaled, width_scaled, ~] = size(scaledImage);
+centerX = width_scaled/2;
+centerY = height_scaled/2;
 
-% Crop image
-margin_x = 40;
-margin_y = 40;
-croppedImage = imcrop(scaledImage, [(center_x-margin_x) (center_y-margin_y) desired_eye_distance+2*margin_x desired_eye_distance+2*margin_y]);
+% Crop the scaled image around the center
+mX = 40;
+mY = 40;
+
+height = desired_eye_distance+2*mX;
+width = desired_eye_distance+2*mY;
+
+croppedImage = imcrop(scaledImage, [(centerX-mX) (centerY-mY) height width]);
 
 end
