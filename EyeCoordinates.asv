@@ -11,7 +11,7 @@ function [leftEye, rightEye] = EyeCoordinates(Eyes, Mouth)
     mouthCentroid = stats_Mouth.Centroid(1, :);
     mouthy = round(mouthCentroid(2));
     
-    Eyes(mouthy-50:end, :) = 0; % Remove mouth and area under mouth from eyes image. 
+    Eyes(mouthy-50:end, :) = 0; % Remove mouth and area under it from eyes image. 
     
     Rmin = 5;
     Rmax = 50;
@@ -33,9 +33,9 @@ function [leftEye, rightEye] = EyeCoordinates(Eyes, Mouth)
    
     slope = (rad2deg((y2 - y1) / (x2 - x1))); % Slope from the two eyes 
     
-    % If the current eyes are in impossible postions in regard to eachother 
     if ((slope > 5) && (slope < -5) || (abs((rightEye(1,1) - leftEye(1,1))) < 80) || (abs((rightEye(1,1) - leftEye(1,1))) > 150) )
 
+        
         for i = 1:length(centersDark) 
             if((leftEye(1,1) > 180)) % Left eye to much to the right? 
                 
