@@ -1,10 +1,10 @@
 A MATLAB program utilizing Eigenfaces and morphological operations for the identification of portrait photos and, in extension, performing facial recognition. The program can be trained on a predefined number of faces to determine if a query face has access or not.
 
-## Normalized:
+## Color correction:
 
 ![unnamed-2](https://github.com/hamreliusfilip/Facial_Recognition/assets/91670593/c58b36dd-0978-4271-9c59-d6f88bb509ea)
 
-## Color correction: 
+## Normalized: 
 
 ![unnamed-3](https://github.com/hamreliusfilip/Facial_Recognition/assets/91670593/0c4e1525-feb6-4d9e-986b-dc48a385d0d3)
 
